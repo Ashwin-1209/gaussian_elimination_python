@@ -114,7 +114,6 @@ b = [
     2
 ]
 
-
 lst = [row[:] for row in A]
 ans = b[:]
 for i in range(len(A)):
