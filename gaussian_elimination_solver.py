@@ -71,6 +71,22 @@ def row_reduction(n, A, b, col, row, fact):
 
     return lst, answer_set
 
+def rank_check(lst, ans):
+    a, ab = 0, 0
+
+    for i in lst:
+        for j in i:
+            if j != 0:
+                a += 1
+                break
+
+    for i in ans:
+        if i == 0:
+            continue
+        ab += 1
+
+    return a, ab
+
 def back_substitution(n, A, b):
     solution_set = []
 
@@ -90,12 +106,12 @@ def back_substitution(n, A, b):
 
 A = [
     [1, 1],
-    [1, 1.0000001]
+    [2, 2]
 ]
 
 b = [
     1,
-    3
+    2
 ]
 
 
@@ -111,7 +127,14 @@ for i in range(len(A)):
             factor = -1*(ele/pivot)
             lst, ans = row_reduction(len(lst), lst, ans, j, i, factor)
 
-res = back_substitution(len(lst), lst, ans)
+a, ab = rank_check(lst, ans)
 
-for i in res:
-    print(round(i, 2), end = "\t")
+if a == ab and len(lst) == a:
+    print("Given system has unique solutions")
+    res = back_substitution(len(lst), lst, ans)
+    for i in res:
+        print(round(i, 2), end = "\t")
+elif a == ab and len(lst) > a:
+    print("Given system has infinite solutions")
+elif a < ab:
+    print("Given system has no solutions")
