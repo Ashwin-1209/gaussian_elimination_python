@@ -4,6 +4,19 @@ def display_matrix(lst):
             print(round(j, 2), end = "\t")
         print()
 
+def boundary_check(a, b):
+    check = True
+
+    for i in a:
+        if len(i) != len(a):
+            check = False
+            break
+
+    if len(b) != len(a):
+        check = False
+
+    return check
+
 def multiply(n, a, b):
     mul = []
 
@@ -85,6 +98,9 @@ def rank_check(lst, ans):
             continue
         ab += 1
 
+    if a > ab:
+        ab = a
+
     return a, ab
 
 def back_substitution(n, A, b):
@@ -106,20 +122,27 @@ def back_substitution(n, A, b):
 
 A = [
     [1, 1],
-    [2, 2]
+    [2, 3]
 ]
 
 b = [
     1,
-    2
+    2,
 ]
+
+print("\n========= GAUSSIAN ELIMINATION SOLVER =========\n")
+
+assert boundary_check(A, b), "INVALID INPUT"
+
+print("Number of variables:", len(A[0]))
+print("\n==================== PIVOT ====================\n")
 
 lst = [row[:] for row in A]
 ans = b[:]
 for i in range(len(A)):
     lst, ans = max_pivot(len(lst), i, lst, ans)
     pivot = lst[i][i]
-    print("Pivot ", i+1, ":", pivot)
+    print("Pivot", i+1, ":", pivot)
     for j in range(i+1, len(lst)):
         ele = lst[j][i]
         if ele != 0:
@@ -128,12 +151,17 @@ for i in range(len(A)):
 
 a, ab = rank_check(lst, ans)
 
+print("\n==================== RESULT ===================\n")
+
 if a == ab and len(lst) == a:
     print("Given system has unique solutions")
     res = back_substitution(len(lst), lst, ans)
-    for i in res:
-        print(round(i, 2), end = "\t")
+    print("\n===============================================\n")
+    for i in range(len(res)):
+        print(f"x{i+1} =", round(res[i], 2))
 elif a == ab and len(lst) > a:
     print("Given system has infinite solutions")
 elif a < ab:
     print("Given system has no solutions")
+
+print("\n===============================================\n")
