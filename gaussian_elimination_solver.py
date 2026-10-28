@@ -120,14 +120,15 @@ def back_substitution(n, A, b):
 
     return solution_set[::-1]
 
+# ENTER THE EQUATION MATRICES HERE
 A = [
-    [1, 1],
-    [2, 3]
+    [1, 1, 1],
+    [2, -1, 1],
+    [1, -1, 2]
 ]
 
 b = [
-    1,
-    2,
+    6, 3, 5
 ]
 
 print("\n========= GAUSSIAN ELIMINATION SOLVER =========\n")
